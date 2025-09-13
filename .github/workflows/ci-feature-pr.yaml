@@ -78,13 +78,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # Garante pytest se não estiver no requirements
           python - <<'PY'
           import pkgutil, sys
           if not pkgutil.find_loader("pytest"):
-              sys.exit("pytest not found; please add it to requirements.txt or let CI install it explicitly.")
+              sys.exit("pytest not found; please add it to requirements.txt or install manually.")
           PY
-        shell: bash || exit 1
+        shell: bash
 
       - name: Ensure pytest if previous step exited
         if: failure()
